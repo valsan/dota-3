@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
         if (target != null)
         {
             _navMeshAgent.SetDestination(target.transform.position);
-            _navMeshAgent.stoppingDistance = _playerStats.AttackRange;
         }
     }
 
@@ -45,16 +44,21 @@ public class PlayerController : MonoBehaviour
             _previewSpehere.transform.position = raycastHit.point;
             _navMeshAgent.SetDestination(raycastHit.point);
 
+            // Targeting an enemy
             if (raycastHit.transform.TryGetComponent(out Character character))
             {
                 if (character != _character)
                 {
                     target = character;
+                    _navMeshAgent.stoppingDistance = _playerStats.AttackRange;
                 }
             }
+
+            // Targeting the ground
             else
             {
                 target = null;
+                _navMeshAgent.stoppingDistance = 0;
                 _navMeshAgent.SetDestination(raycastHit.point);
             }
         }
