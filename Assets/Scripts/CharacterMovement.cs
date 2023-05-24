@@ -1,15 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CharacterMovement : MonoBehaviour
 {
-    private Rigidbody _rigidbody;
+    [SerializeField] private Animator _animator;
 
+    private NavMeshAgent _navMeshAgent;
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
+    private void Update()
+    {
+        if (_animator != null)
+        {
+            _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude / _navMeshAgent.speed);
+        }
 
+        // Rotate manually
+        if (_navMeshAgent.velocity.sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.rotation = Quaternion.LookRotation(_navMeshAgent.velocity.normalized);
+        }
+    }
 }
