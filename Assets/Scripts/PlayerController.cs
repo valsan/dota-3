@@ -7,16 +7,24 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private GameObject _previewSpehere;
     [SerializeField] private Stats _playerStats;
+    [SerializeField] private Animator _animator;
 
     private NavMeshAgent _navMeshAgent;
 
     private Character target;
+    public enum PlayerState
+    {
+        Moving,
+        Attacking,
+    }
 
-    private Character _character;
+    public PlayerState State { get; private set; } = PlayerState.Moving;
+
+    private Character _characterSelf;
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _character = GetComponent<Character>();
+        _characterSelf = GetComponent<Character>();
     }
 
     void Update()
@@ -26,10 +34,38 @@ public class PlayerController : MonoBehaviour
             OnRightClick();
         }
 
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            _animator.SetTrigger("AutoAttack");
+        }
+
         // If I have a target, follow it
         if (target != null)
         {
             _navMeshAgent.SetDestination(target.transform.position);
+            // Check distance from target
+            if(!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+            {
+                if(State == PlayerState.Moving)
+                {
+                    State = PlayerState.Attacking;
+                    _animator.SetTrigger("AutoAttack");
+                }
+            } else
+            {
+                if (State == PlayerState.Attacking)
+                {
+                    State = PlayerState.Moving;
+                    _animator.SetTrigger("StopAttack");
+                }
+            }
+        } else
+        {
+            if(State == PlayerState.Attacking)
+            {
+                State = PlayerState.Moving;
+                _animator.SetTrigger("StopAttack");
+            }
         }
     }
 
@@ -47,7 +83,7 @@ public class PlayerController : MonoBehaviour
             // Targeting an enemy
             if (raycastHit.transform.TryGetComponent(out Character character))
             {
-                if (character != _character)
+                if (character != _characterSelf)
                 {
                     target = character;
                     _navMeshAgent.stoppingDistance = _playerStats.AttackRange;
@@ -62,6 +98,12 @@ public class PlayerController : MonoBehaviour
                 _navMeshAgent.SetDestination(raycastHit.point);
             }
         }
+    }
+
+    public void Attack()
+    {
+        if (target == null) return;
+        target.GetComponent<Enemy>().Damage(20);
     }
 
     private void OnDrawGizmos()
