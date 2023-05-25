@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject _previewSpehere;
     [SerializeField] private Stats _playerStats;
     [SerializeField] private Animator _animator;
+    [SerializeField] private ParticleSystem _clickParticle;
 
     private NavMeshAgent _navMeshAgent;
 
@@ -96,6 +97,8 @@ public class PlayerController : MonoBehaviour
                 target = null;
                 _navMeshAgent.stoppingDistance = 0;
                 _navMeshAgent.SetDestination(raycastHit.point);
+                _clickParticle.transform.position = raycastHit.point + Vector3.up;
+                _clickParticle.Play();
             }
         }
     }
