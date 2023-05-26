@@ -13,16 +13,43 @@ public class HeroAI : MonoBehaviour
     [SerializeField] private Stats _playerStats;
     [SerializeField] private Animator _animator;
 
+    // Ranged auto attack
+    [SerializeField] bool _isRanged;
+    [SerializeField] private Projectile _projectilePrefab;
+    [SerializeField] private Transform _attackStartTransform;
+
+    public PlayerState CurrentState { get; private set; } = PlayerState.Moving;
     public Character Target { get; set; }
-    public PlayerState State { get; private set; } = PlayerState.Moving;
+    public float DistanceToTarget => (Target.transform.position - transform.position).magnitude;
+    public bool IsTargetInRange => DistanceToTarget <= _playerStats.AttackRange;
 
     private NavMeshAgent _navMeshAgent;
+
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     public void Attack()
+    {
+        if(_isRanged)
+        {
+            RangedAttack();
+        } else
+        {
+            MeleeAttack();
+        }
+    }
+
+    private void RangedAttack()
+    {
+        if (Target == null) return;
+        Projectile projectile = Instantiate(_projectilePrefab, _attackStartTransform.position, _attackStartTransform.rotation);
+        projectile.SetTarget(Target);
+    }
+
+
+    private void MeleeAttack()
     {
         if (Target == null) return;
         Target.GetComponent<Enemy>().Damage(20);
@@ -33,33 +60,33 @@ public class HeroAI : MonoBehaviour
         // If I have a target, follow it
         if (Target != null)
         {
-            _navMeshAgent.stoppingDistance = _playerStats.AttackRange;
             _navMeshAgent.SetDestination(Target.transform.position);
 
-            // Check distance from target
-            if (!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+            if (IsTargetInRange)
             {
-                if (State == PlayerState.Moving)
+                if (CurrentState == PlayerState.Moving)
                 {
-                    State = PlayerState.Attacking;
+                    _navMeshAgent.isStopped = true;
+                    CurrentState = PlayerState.Attacking;
                     _animator.SetTrigger("AutoAttack");
                 }
             }
             else
             {
-                if (State == PlayerState.Attacking)
+                if (CurrentState == PlayerState.Attacking)
                 {
-                    State = PlayerState.Moving;
+                    CurrentState = PlayerState.Moving;
                     _animator.SetTrigger("StopAttack");
+                    _navMeshAgent.isStopped = false;
                 }
             }
         }
         else
         {
-            _navMeshAgent.stoppingDistance = 0;
-            if (State == PlayerState.Attacking)
+            if (CurrentState == PlayerState.Attacking)
             {
-                State = PlayerState.Moving;
+                _navMeshAgent.isStopped = false;
+                CurrentState = PlayerState.Moving;
                 _animator.SetTrigger("StopAttack");
             }
         }
@@ -67,7 +94,7 @@ public class HeroAI : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(State == PlayerState.Attacking)
+        if(CurrentState == PlayerState.Attacking && Target != null)
         {
             transform.LookAt(Target.transform);
         }

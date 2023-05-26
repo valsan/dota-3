@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   _damage: 10
-  _attackRange: 1
+  _attackRange: 6
