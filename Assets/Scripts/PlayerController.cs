@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
         if (target != null)
         {
             _navMeshAgent.SetDestination(target.transform.position);
+
             // Check distance from target
             if(!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
             {
