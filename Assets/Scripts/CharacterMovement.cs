@@ -19,11 +19,5 @@ public class CharacterMovement : MonoBehaviour
         {
             _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude / _navMeshAgent.speed);
         }
-
-        // Rotate manually
-        if (_navMeshAgent.velocity.sqrMagnitude > Mathf.Epsilon)
-        {
-            transform.rotation = Quaternion.LookRotation(_navMeshAgent.velocity.normalized);
-        }
     }
 }

@@ -39,4 +39,13 @@ public class CreepAI : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        // Rotate manually
+        if (_navMeshAgent.velocity.sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.rotation = Quaternion.LookRotation(_navMeshAgent.velocity.normalized);
+        }
+    }
+
 }

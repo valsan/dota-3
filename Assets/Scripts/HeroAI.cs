@@ -65,6 +65,20 @@ public class HeroAI : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        if(State == PlayerState.Attacking)
+        {
+            transform.LookAt(Target.transform);
+        }
+
+        // Rotate manually
+        if (_navMeshAgent.velocity.sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.rotation = Quaternion.LookRotation(_navMeshAgent.velocity.normalized);
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
