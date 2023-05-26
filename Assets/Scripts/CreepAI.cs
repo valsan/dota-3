@@ -15,9 +15,11 @@ public class CreepAI : MonoBehaviour
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
+    }
+    private void Start()
+    {
         _navMeshAgent.SetDestination(_wayPoints[_wayCount++].position);
     }
-
     private void Update()
     {
         if(_navMeshAgent != null)

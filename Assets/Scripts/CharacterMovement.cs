@@ -10,7 +10,7 @@ public class CharacterMovement : MonoBehaviour
     private NavMeshAgent _navMeshAgent;
     private void Awake()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent = GetComponentInParent<NavMeshAgent>();
     }
 
     private void Update()

@@ -5,27 +5,15 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private GameObject _previewSpehere;
-    [SerializeField] private Stats _playerStats;
-    [SerializeField] private Animator _animator;
     [SerializeField] private ParticleSystem _clickParticle;
+    [SerializeField] private HeroAI _heroAI;
 
     private NavMeshAgent _navMeshAgent;
 
-    private Character target;
-    public enum PlayerState
-    {
-        Moving,
-        Attacking,
-    }
-
-    public PlayerState State { get; private set; } = PlayerState.Moving;
-
-    private Character _characterSelf;
+    private Character _characterSelf => _heroAI.GetComponent<Character>();
     private void Awake()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-        _characterSelf = GetComponent<Character>();
+        _navMeshAgent = _heroAI.GetComponent<NavMeshAgent>();
     }
 
     void Update()
@@ -33,41 +21,6 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse1))
         {
             OnRightClick();
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            _animator.SetTrigger("AutoAttack");
-        }
-
-        // If I have a target, follow it
-        if (target != null)
-        {
-            _navMeshAgent.SetDestination(target.transform.position);
-
-            // Check distance from target
-            if(!_navMeshAgent.pathPending && _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
-            {
-                if(State == PlayerState.Moving)
-                {
-                    State = PlayerState.Attacking;
-                    _animator.SetTrigger("AutoAttack");
-                }
-            } else
-            {
-                if (State == PlayerState.Attacking)
-                {
-                    State = PlayerState.Moving;
-                    _animator.SetTrigger("StopAttack");
-                }
-            }
-        } else
-        {
-            if(State == PlayerState.Attacking)
-            {
-                State = PlayerState.Moving;
-                _animator.SetTrigger("StopAttack");
-            }
         }
     }
 
@@ -79,7 +32,6 @@ public class PlayerController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
         if (Physics.Raycast(ray, out RaycastHit raycastHit))
         {
-            _previewSpehere.transform.position = raycastHit.point;
             _navMeshAgent.SetDestination(raycastHit.point);
 
             // Targeting an enemy
@@ -87,32 +39,20 @@ public class PlayerController : MonoBehaviour
             {
                 if (character != _characterSelf)
                 {
-                    target = character;
-                    _navMeshAgent.stoppingDistance = _playerStats.AttackRange;
+                    _heroAI.Target = character;
                 }
             }
 
             // Targeting the ground
             else
             {
-                target = null;
-                _navMeshAgent.stoppingDistance = 0;
+                _heroAI.Target = null;
                 _navMeshAgent.SetDestination(raycastHit.point);
-                _clickParticle.transform.position = raycastHit.point + Vector3.up;
+
+                // Move Particle up a little so it doesn't clip in the ground
+                _clickParticle.transform.position = raycastHit.point - ray.direction.normalized;
                 _clickParticle.Play();
             }
         }
-    }
-
-    public void Attack()
-    {
-        if (target == null) return;
-        target.GetComponent<Enemy>().Damage(20);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _playerStats.AttackRange);
     }
 }
