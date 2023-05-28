@@ -108,6 +108,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hero Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1988244910169996114, guid: eff76f9a17342f74590a03e2cd9533e4,
+        type: 3}
+      propertyPath: team
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081268870364448986, guid: eff76f9a17342f74590a03e2cd9533e4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eff76f9a17342f74590a03e2cd9533e4, type: 3}
 --- !u!1 &727762932671398472 stripped

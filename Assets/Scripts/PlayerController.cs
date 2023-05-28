@@ -7,10 +7,14 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _clickParticle;
     [SerializeField] private HeroAI _heroAI;
+    [SerializeField] private RectTransform _rectTransform;
 
     private NavMeshAgent _navMeshAgent;
-
     private Character _characterSelf => _heroAI.GetComponent<Character>();
+
+    public bool LeftClickDown { get; private set; }
+
+    Vector3 StartMousePosition;
     private void Awake()
     {
         _navMeshAgent = _heroAI.GetComponent<NavMeshAgent>();
@@ -22,6 +26,31 @@ public class PlayerController : MonoBehaviour
         {
             OnRightClick();
         }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            _rectTransform.gameObject.SetActive(true);
+            StartMousePosition = Input.mousePosition;
+            LeftClickDown = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            _rectTransform.gameObject.SetActive(false);
+            LeftClickDown = false;
+        }
+
+        if(LeftClickDown)
+        {
+            ResizeSelecionBox();
+        }
+    }
+    
+    private void ResizeSelecionBox()
+    {
+        float width = Input.mousePosition.x - StartMousePosition.x;
+        float height = Input.mousePosition.y - StartMousePosition.y;
+
+        _rectTransform.anchoredPosition = new Vector2(StartMousePosition.x, StartMousePosition.y ) + new Vector2(width / 2, height / 2);
+        _rectTransform.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
     }
 
     private void OnRightClick()
