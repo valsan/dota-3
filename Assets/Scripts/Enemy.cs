@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private float _maxHealth;
-
     [SerializeField] private Image _healthImage;
     public float Health { get ; private set; }
 
@@ -19,12 +18,5 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         Health -= amount;
         _healthImage.fillAmount = Health / _maxHealth;
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A)) { 
-            Damage(20);
-        }
     }
 }

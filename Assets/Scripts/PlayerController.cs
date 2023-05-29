@@ -9,15 +9,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private HeroAI _heroAI;
     [SerializeField] private RectTransform _rectTransform;
 
-    private NavMeshAgent _navMeshAgent;
     private Character _characterSelf => _heroAI.GetComponent<Character>();
 
     public bool LeftClickDown { get; private set; }
 
     Vector3 StartMousePosition;
+
+
+    private NavMeshAgent _navMeshAgent;
+    private SpellController _spellController;
     private void Awake()
     {
         _navMeshAgent = _heroAI.GetComponent<NavMeshAgent>();
+        _spellController = _heroAI.GetComponent<SpellController>();
     }
 
     void Update()
@@ -42,6 +46,11 @@ public class PlayerController : MonoBehaviour
         {
             ResizeSelecionBox();
         }
+    }
+
+    public void OnSpell1()
+    {
+        _spellController.Spell1();
     }
     
     private void ResizeSelecionBox()
