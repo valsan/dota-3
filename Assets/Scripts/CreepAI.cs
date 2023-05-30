@@ -6,20 +6,21 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class CreepAI : MonoBehaviour
 {
-    [SerializeField] private List<Transform> _wayPoints;
-
     private int _wayCount = 0;
 
     private NavMeshAgent _navMeshAgent;
+    public List<Transform> WayPoints { get; set; }
 
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
+
     private void Start()
     {
-        _navMeshAgent.SetDestination(_wayPoints[_wayCount++].position);
+        _navMeshAgent.SetDestination(WayPoints[_wayCount++].position);
     }
+
     private void Update()
     {
         if(_navMeshAgent != null)
@@ -30,9 +31,9 @@ public class CreepAI : MonoBehaviour
                 if(_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
                 {
                     // Set next waypoint if it exists
-                    if(_wayCount < _wayPoints.Count)
+                    if(_wayCount < WayPoints.Count)
                     {
-                        _navMeshAgent.SetDestination(_wayPoints[_wayCount++].position);
+                        _navMeshAgent.SetDestination(WayPoints[_wayCount++].position);
                     }
                 }
             }
@@ -47,5 +48,4 @@ public class CreepAI : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(_navMeshAgent.velocity.normalized);
         }
     }
-
 }

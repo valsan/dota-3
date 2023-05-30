@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,14 +9,16 @@ public enum Team
     Radiant,
     Dire
 }
-public class Character : MonoBehaviour, ITargetable, IDamageable
+public abstract class Character : MonoBehaviour, ITargetable, IDamageable
 {
+    [SerializeField] private CharacterConfig _config;
     [SerializeField] private float _maxHealth;
     [SerializeField] private Image _healthImage;
 
     [SerializeField] private Team team;
     
     public Team Team { get { return team; } }
+    public CharacterConfig Config { get { return _config; } }
 
     public float Health { get; private set; }
 
@@ -31,4 +34,7 @@ public class Character : MonoBehaviour, ITargetable, IDamageable
         Health -= amount;
         _healthImage.fillAmount = Health / _maxHealth;
     }
+
+
+    public abstract void Setup(CharacterConfig _config);
 }

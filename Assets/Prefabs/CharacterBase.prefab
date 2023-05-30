@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e79f6fcb74b9ce478d378cba2cbede8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _config: {fileID: 11400000, guid: e05318a6b287f9746bc90bd9076454ec, type: 2}
   _maxHealth: 100
   _healthImage: {fileID: 2781842296949682214}
   team: 1
