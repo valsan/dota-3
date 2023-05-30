@@ -19,9 +19,11 @@ public class Character : MonoBehaviour, ITargetable, IDamageable
 
     public float Health { get; private set; }
 
-    private void Awake()
+    private void Start()
     {
         Health = _maxHealth;
+
+        PlayerController.SelectableUnits.Add(this);
     }
 
     public void Damage(float amount)

@@ -476,7 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6557239f8109b0429ccc5e82460ac49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraSpeed: 0
+  _cameraSpeed: 120
 --- !u!114 &332442274 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 959831873144036683, guid: 7623d66ba4e38254ca607f27759e1561,
