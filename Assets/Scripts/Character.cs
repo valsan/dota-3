@@ -31,7 +31,6 @@ public class Character : MonoBehaviour, ITargetable, IDamageable
 
     public void Damage(float amount)
     {
-        print("DAMAGE");
         Health -= amount;
         _healthImage.fillAmount = Health / _maxHealth;
     }

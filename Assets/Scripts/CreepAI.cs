@@ -9,7 +9,7 @@ public class CreepAI : MonoBehaviour
     private int _wayCount = 0;
 
     private NavMeshAgent _navMeshAgent;
-    public List<Transform> WayPoints { get; set; }
+    public List<Transform> WayPoints { get; set; } = new List<Transform>();
 
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class CreepAI : MonoBehaviour
 
     private void Start()
     {
-        _navMeshAgent.SetDestination(WayPoints[_wayCount++].position);
+        //_navMeshAgent.SetDestination(WayPoints[_wayCount++].position);
     }
 
     private void Update()
