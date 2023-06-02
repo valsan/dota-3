@@ -19,7 +19,6 @@ public class Tower : MonoBehaviour
         _characterSerlf = GetComponent<Character>();
     }
 
-
     private void Update()
     {
         FindTarget();

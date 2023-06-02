@@ -18,7 +18,8 @@ public class CreepAI : MonoBehaviour
 
     private void Start()
     {
-        //_navMeshAgent.SetDestination(WayPoints[_wayCount++].position);
+        if (WayPoints.Count == 0) return;
+        _navMeshAgent.SetDestination(WayPoints[_wayCount++].position);
     }
 
     private void Update()

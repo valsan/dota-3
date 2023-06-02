@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
@@ -22,6 +23,9 @@ public class Character : MonoBehaviour, ITargetable, IDamageable
 
     public float Health { get; private set; }
 
+    public delegate void OnDeathHandler();
+    public event OnDeathHandler OnDeath;
+
     private void Start()
     {
         Health = _maxHealth;
@@ -31,7 +35,14 @@ public class Character : MonoBehaviour, ITargetable, IDamageable
 
     public void Damage(float amount)
     {
-        Health -= amount;
+        Health -= Mathf.Max(amount, 0);
         _healthImage.fillAmount = Health / _maxHealth;
+
+        if(Health <= 0)
+        {
+            OnDeath?.Invoke();
+
+            Destroy(gameObject);
+        }
     }
 }

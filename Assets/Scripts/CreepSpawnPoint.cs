@@ -9,7 +9,6 @@ public class CreepSpawnPoint : MonoBehaviour
 
     [SerializeField] private CreepAI _creepPrefab;
 
-
     public void SpawnLane()
     {
         CreepAI creepAI = Instantiate(_creepPrefab, transform.position, transform.rotation);

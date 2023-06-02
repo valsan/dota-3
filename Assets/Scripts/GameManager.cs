@@ -7,8 +7,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<CreepSpawnPoint> _spawnPoints;
     [SerializeField] private float _laneSpawnInterval;
 
+    [SerializeField] private Character _radiantTower;
+    [SerializeField] private Character _direTower;
+
     [Header("Debug")]
     [SerializeField] private bool _spawnCreepsEnabled;
+
+    private void Awake()
+    {
+        _radiantTower.OnDeath += GameOver;
+        _direTower.OnDeath += GameOver;
+    }
 
     private void Start()
     {
@@ -31,4 +40,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public void GameOver()
+    {
+        Debug.Log("Game Over");
+    }
 }
