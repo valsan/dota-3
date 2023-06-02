@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3491948065433947254}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 30b24410a87d5eb42b973674d0aa801e,
@@ -88,6 +89,17 @@ PrefabInstance:
       value: kaya
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 30b24410a87d5eb42b973674d0aa801e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1059840212}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 30b24410a87d5eb42b973674d0aa801e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1059840214}
   m_SourcePrefab: {fileID: 100100000, guid: 30b24410a87d5eb42b973674d0aa801e, type: 3}
 --- !u!1 &3942824180537090225 stripped
 GameObject:
@@ -115,6 +127,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1059840214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,11 +141,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1059840212}
+--- !u!4 &4466560513887418891 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 30b24410a87d5eb42b973674d0aa801e,
+    type: 3}
+  m_PrefabInstance: {fileID: 4212783621325905376}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4212783622760163031
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 721477685280139937, guid: eff76f9a17342f74590a03e2cd9533e4,
@@ -205,7 +225,27 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8276415986249307252, guid: eff76f9a17342f74590a03e2cd9533e4,
+        type: 3}
+      propertyPath: team
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 721477685280139937, guid: eff76f9a17342f74590a03e2cd9533e4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4466560513887418891}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 721477685280139965, guid: eff76f9a17342f74590a03e2cd9533e4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1773067240}
+    - targetCorrespondingSourceObject: {fileID: 721477685280139965, guid: eff76f9a17342f74590a03e2cd9533e4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1773067241}
   m_SourcePrefab: {fileID: 100100000, guid: eff76f9a17342f74590a03e2cd9533e4, type: 3}
 --- !u!114 &2084540691771578097 stripped
 MonoBehaviour:

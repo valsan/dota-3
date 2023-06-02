@@ -9,7 +9,7 @@ public enum Team
     Radiant,
     Dire
 }
-public abstract class Character : MonoBehaviour, ITargetable, IDamageable
+public class Character : MonoBehaviour, ITargetable, IDamageable
 {
     [SerializeField] private CharacterConfig _config;
     [SerializeField] private float _maxHealth;
@@ -31,10 +31,8 @@ public abstract class Character : MonoBehaviour, ITargetable, IDamageable
 
     public void Damage(float amount)
     {
+        print("DAMAGE");
         Health -= amount;
         _healthImage.fillAmount = Health / _maxHealth;
     }
-
-
-    public abstract void Setup(CharacterConfig _config);
 }
