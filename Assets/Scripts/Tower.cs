@@ -35,7 +35,7 @@ public class Tower : MonoBehaviour
         while(Target == target)
         {
             Projectile projectile = Instantiate(_projectilePrefab, _attackStartTransform.position, _attackStartTransform.rotation);
-            projectile.SetTarget(Target);
+            projectile.Shoot(Target, _characterSerlf, 20f);
             yield return new WaitForSeconds(1f);
         }
     }

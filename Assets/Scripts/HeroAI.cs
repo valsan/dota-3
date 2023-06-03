@@ -24,10 +24,12 @@ public class HeroAI : MonoBehaviour
     public bool IsTargetInRange => DistanceToTarget <= _playerStats.AttackRange;
 
     private NavMeshAgent _navMeshAgent;
+    private Character _characterSelf;
 
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _characterSelf = GetComponent<Character>();
     }
 
     public void Attack()
@@ -45,17 +47,22 @@ public class HeroAI : MonoBehaviour
     {
         if (Target == null) return;
         Projectile projectile = Instantiate(_projectilePrefab, _attackStartTransform.position, _attackStartTransform.rotation);
-        projectile.SetTarget(Target);
+        projectile.Shoot(Target, _characterSelf, _playerStats.Damage);
     }
 
 
     private void MeleeAttack()
     {
         if (Target == null) return;
-        Target.GetComponent<IDamageable>().Damage(_playerStats.Damage);
+        Target.GetComponent<IDamageable>().Damage(new DamageInfo(_characterSelf, _playerStats.Damage));
     }
 
     private void Update()
+    {
+        HandleMovement();
+    }
+
+    private void HandleMovement()
     {
         // If I have a target, follow it
         if (Target != null)

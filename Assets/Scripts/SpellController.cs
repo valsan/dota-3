@@ -28,7 +28,7 @@ public class SpellController : MonoBehaviour
             {
                 if(character.Team != _character.Team)
                 {
-                    character.Damage(20f);
+                    character.Damage(new DamageInfo(_character, 40f));
                 }
             }
         }

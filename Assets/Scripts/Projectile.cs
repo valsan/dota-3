@@ -8,8 +8,10 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
-    public Character Target;
-    internal void SetTarget(Character target)
+    public Character Target { get; private set; }
+    public Character Attacker { get; private set; }
+    public float Damage { get; private set; }
+    public void Shoot(Character target, Character attacker, float damage)
     {
         Target = target;
     }
@@ -23,7 +25,7 @@ public class Projectile : MonoBehaviour
 
         if((Target.transform.position - transform.position).magnitude < 0.5f)
         {
-            Target.GetComponent<IDamageable>().Damage(20);
+            Target.GetComponent<IDamageable>().Damage(new DamageInfo(Attacker, Damage));
             Destroy(gameObject);
         }
     }

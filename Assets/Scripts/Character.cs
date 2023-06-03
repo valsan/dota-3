@@ -33,10 +33,10 @@ public class Character : MonoBehaviour, ITargetable, IDamageable
         PlayerController.SelectableUnits.Add(this);
     }
 
-    public void Damage(float amount)
+    public void Damage(DamageInfo damageInfo)
     {
         if(IsDead) return;
-        Health -= Mathf.Max(amount, 0);
+        Health -= Mathf.Max(damageInfo.Amount, 0);
         _healthImage.fillAmount = Health / _maxHealth;
 
         if(IsDead)

@@ -38,7 +38,7 @@ public class CreepAI : MonoBehaviour
     private void MeleeAttack()
     {
         if (Target == null) return;
-        Target.GetComponent<IDamageable>().Damage(10);
+        Target.GetComponent<IDamageable>().Damage(new DamageInfo(_characterSelf, _playerStats.Damage));
     }
 
     private void Start()
