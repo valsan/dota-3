@@ -6,6 +6,7 @@ public class Attack : MonoBehaviour
 {
     public void AutoAttack()
     {
-        GetComponentInParent<HeroAI>().Attack();
+        GetComponentInParent<HeroAI>()?.Attack();
+        GetComponentInParent<CreepAI>()?.Attack();
     }
 }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2439983332bbe5b4984cb5595856af23, type: 3}
-  m_Name: PlayerStats
+  m_Name: CreepStats
   m_EditorClassIdentifier: 
-  _damage: 50
-  _attackRange: 6
+  _damage: 10
+  _attackRange: 2

@@ -52,7 +52,7 @@ public class HeroAI : MonoBehaviour
     private void MeleeAttack()
     {
         if (Target == null) return;
-        Target.GetComponent<IDamageable>().Damage(20);
+        Target.GetComponent<IDamageable>().Damage(_playerStats.Damage);
     }
 
     private void Update()
