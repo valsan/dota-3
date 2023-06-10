@@ -16,7 +16,6 @@ public class CharacterMovement : MonoBehaviour
 
         _character.OnDeath += () =>
         {
-            Debug.Log("DIE ANIMATION");
             _animator.SetTrigger("Die");
         };
     }

@@ -16,7 +16,6 @@ public class Character : MonoBehaviour, ITargetable, IDamageable
     [SerializeField] private float _maxHealth;
     [SerializeField] private Image _healthImage;
     [SerializeField] private Team team;
-    
     public Team Team { get { return team; } }
     public CharacterConfig Config { get { return _config; } }
 
